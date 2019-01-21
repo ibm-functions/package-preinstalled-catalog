@@ -17,7 +17,7 @@
 
 include 'tests'
 
-rootProject.name = 'openwhisk-catalog'
+rootProject.name = 'package=preinstalled-catalog'
 
 gradle.ext.openwhisk = [
         version: '1.0.0-SNAPSHOT'
