@@ -22,6 +22,7 @@
 
 SCRIPTDIR="$(cd $(dirname "$0")/ && pwd)"
 OPENWHISK_HOME=${OPENWHISK_HOME:-$SCRIPTDIR/../../openwhisk}
+ACTION_RUNTIME_VERSION=${ACTION_RUNTIME_VERSION:="nodejs:10"}
 
 : ${WHISK_API_HOST:?"WHISK_API_HOST must be set and non-empty"}
 EDGE_HOST=$WHISK_API_HOST
@@ -41,7 +42,7 @@ function install() {
     RELATIVE_PATH=$1
     ACTION_NAME=$2
     REST=("${@:3}")
-    CMD_ARRAY=("$WHISK_CLI_PATH" -i --apihost "$EDGE_HOST" action update --auth "$AUTH_KEY" "$ACTION_NAME" "$RELATIVE_PATH" "${REST[@]}")
+    CMD_ARRAY=("$WHISK_CLI_PATH" -i --apihost "$EDGE_HOST" action update --kind "$ACTION_RUNTIME_VERSION" --auth "$AUTH_KEY" "$ACTION_NAME" "$RELATIVE_PATH" "${REST[@]}")
     export WSK_CONFIG_FILE= # override local property file to avoid namespace clashes
     "${CMD_ARRAY[@]}" &
     PID=$!
